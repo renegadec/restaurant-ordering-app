@@ -1,2 +1,6 @@
-# restaurant-ordering-app
-app for ordering food
+# Restaurant Ordering App
+
+Commands:
+- npm run dev
+- npm run build
+- npm run preview

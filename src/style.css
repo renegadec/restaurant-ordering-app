@@ -1,0 +1,96 @@
+body {   
+    margin:0;   
+    background:#fafafa; 
+    font-family: "Smythe", system-ui;;
+    color: #FFFFFF
+}
+
+header {
+    height: 167px;
+    background-image: url('./assets/images/bg-img.png');
+}
+
+header h1 {
+    font-size: 39px;
+    line-height: 24px;
+    padding-top: 46px;
+}
+
+header p {
+    font-size: 22.5px;
+    line-height: 13.8px;
+}
+
+header h1, header p {
+    font-weight: 400;
+    margin-left: 46px;
+}
+
+.container {
+    width: 600px;
+    height: 1161px;
+    background-color: #FFFFFF;
+    margin:0 auto
+}
+
+.item-container {
+    display: flex;
+    
+    width: 508px;
+    height: 140px;
+    border-bottom: 1px solid #D2D2D2;
+    margin-top: 34px;
+    margin-left: 46px;
+    padding: 0
+}
+
+.emoji {
+    font-size: 78.72px;
+    opacity: 72%;
+}
+
+.item-description {
+    margin-left: 31px;
+}
+
+
+.item-description h2{
+    color: #000000;
+    line-height: 16px;
+}
+
+.item-description h2, .ingredients, .price{
+    font-weight: 400;
+    margin: 10px 0;
+}
+
+.ingredients {
+    font-size: 16px;
+    color: #8B8B8B;
+    line-height: 24px;
+    
+}
+
+.price {
+    color: #000000;
+    font-size: 20px;
+}
+
+.add-btn {
+    margin-left: auto;
+    text-align: center;
+    margin-top: 15px;
+    width: 50px;
+    height: 50px;
+    font-family: "Inter", sans-serif;
+    font-weight: 200;
+    color: #3C3C3C;
+    font-size: 32px;
+    justify-self: flex-end;
+    border: 1.5px solid #DEDEDE;
+    border-radius: 50%;
+}
+
+
+
+

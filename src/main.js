@@ -1,14 +1,24 @@
 import { menuArray as menu } from './data/data'
 
 const foodMenu = document.getElementById('food-menu')
-const checkoutEl = document.getElementById('checkout')
 const checkoutItems = document.getElementById('checked-out')
-const totalPrice =document.getElementById('total')
+const totalPrice = document.getElementById('total')
+const completeOrderBtn = document.getElementById('complete-order-btn')
 
 document.addEventListener('click', function(e){
     if(e.target.dataset.add){
         handleCheckout(e.target.dataset.add);
-        checkoutEl.style.display = 'block'
+        document.getElementById('checkout').style.display = 'block'
+        document.querySelector('.container').style.height = 'auto'
+    }
+
+    if(e.target.id === 'complete-order-btn'){
+        handleCompleteButtonClick()
+    }
+
+    if(e.target.id === 'pay-btn'){
+        e.preventDefault()
+        handlePayButtonClick()
     }
 })
 
@@ -52,12 +62,27 @@ function handleCheckout (foodId) {
 
     totalPrice.innerHTML = `
             <p>Total Price:</p>
-            <p>${cartTotalPrice}</p>
+            <p>$${cartTotalPrice}</p>
     `
 }
 
+function handleCompleteButtonClick() {
+    const modal = document.getElementById('card-details-modal')
+    const overlay = document.getElementById('modal-overlay')
+    modal.style.display = 'flex'
+    modal.classList.toggle('is-open')
+    overlay.classList.toggle('is-open')
+}
 
-
+function handlePayButtonClick() {
+    document.getElementById('card-details-modal').style.display = 'none'
+    document.getElementById('modal-overlay').classList.toggle('is-open')
+    document.getElementById('checkout').innerHTML = `
+        <div class="thank-you-msg">
+            <p>Thanks, James! Your order is on its way!</p>
+        </div>  
+    `
+}
 
 function renderFoodItem() {
      foodMenu.innerHTML = menuItems

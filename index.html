@@ -19,17 +19,28 @@
         <p>The best burgers and pizzas in town</p>
       </header>
       <main>
-        <div id="food-menu"></div>
+        <div id="food-menu" class="food-menu"></div>
         <div class="checkout" id="checkout">
           <h2>Your order</h2>
           <div class="checked-out" id="checked-out"></div>
           <div class="total" id="total"></div>
-          <button>Complete order</button>
+          <div class="btn-container">
+            <button id="complete-order-btn">Complete order</button>
+          </div>
         </div>
       </main>
-
     </div>
-
+    <!-- darken background when modal is active -->
+    <div class="modal-overlay" id="modal-overlay"></div>
+    <div class="card-details-modal" id="card-details-modal">
+      <h2>Enter card details</h2>
+      <form action="">
+        <input type="text" placeholder="Enter your name" required>
+        <input type="number" placeholder="Enter card number" required>
+        <input type="number" placeholder="Enter CVV" pattern="[0-9]{3}" required>
+        <button id="pay-btn" type="submit">Pay</button>
+      </form>
+    </div>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

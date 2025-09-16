@@ -3,7 +3,7 @@ import { menuArray as menu } from './data/data'
 const foodMenu = document.getElementById('food-menu')
 const checkoutItems = document.getElementById('checked-out')
 const totalPrice = document.getElementById('total')
-const completeOrderBtn = document.getElementById('complete-order-btn')
+
 
 document.addEventListener('click', function(e){
     if(e.target.dataset.add){
@@ -15,12 +15,52 @@ document.addEventListener('click', function(e){
     if(e.target.id === 'complete-order-btn'){
         handleCompleteButtonClick()
     }
-
-    if(e.target.id === 'pay-btn'){
-        e.preventDefault()
-        handlePayButtonClick()
-    }
 })
+
+document.getElementById('payment-form').addEventListener('submit', function(e){
+    e.preventDefault()
+
+    const customerName = document.getElementById('customer-name').value.trim()
+    const cardNumber = document.getElementById('card_number').value.replace(/\s+/g, '')
+    const cvv = document.getElementById('cvv').value.trim()
+
+    // Name Validation
+    if(customerName.length < 2 || customerName.length > 50){
+        alert('Name must be betweet 2 and 20 Character')
+        return
+    }
+
+    // Card number validation
+    if(!/^\d{13,19}$/.test(cardNumber) || !luhnCheck(cardNumber)){
+        alert('Card number is invalid.')
+        return
+    }
+
+    // CVV validation
+    if(!/^\d{3,4}$/.test(cvv)) {
+        alert('CVV must be 3 or 4 digits')
+        return
+    }
+
+    // If we reach here, validation passed; proceed as paid
+    handlePayButtonClick(customerName)
+
+})
+
+function luhnCheck(number) {
+    let sum = 0, shouldDouble = false
+
+    for (let i = number.length - 1; i >= 0; i--) {
+        let digit = parseInt(number.charAt(i))
+        if(shouldDouble){
+            digit *= 2
+            if (digit > 9) digit -= 9
+        }
+        sum += digit;
+        shouldDouble = !shouldDouble
+    }
+    return sum % 10 === 0
+}
 
 const menuItems = menu.map(function(menuItem){
     return `
@@ -74,12 +114,12 @@ function handleCompleteButtonClick() {
     overlay.classList.toggle('is-open')
 }
 
-function handlePayButtonClick() {
+function handlePayButtonClick(name) {
     document.getElementById('card-details-modal').style.display = 'none'
     document.getElementById('modal-overlay').classList.toggle('is-open')
     document.getElementById('checkout').innerHTML = `
         <div class="thank-you-msg">
-            <p>Thanks, James! Your order is on its way!</p>
+            <p>Thanks, ${name}! Your order is on its way!</p>
         </div>  
     `
 }

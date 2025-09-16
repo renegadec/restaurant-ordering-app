@@ -34,10 +34,31 @@
     <div class="modal-overlay" id="modal-overlay"></div>
     <div class="card-details-modal" id="card-details-modal">
       <h2>Enter card details</h2>
-      <form action="">
-        <input type="text" placeholder="Enter your name" required>
-        <input type="number" placeholder="Enter card number" required>
-        <input type="number" placeholder="Enter CVV" pattern="[0-9]{3}" required>
+      <form action="" id="payment-form">
+        <input 
+          type="text" 
+          placeholder="Enter your name" 
+          id="customer-name" 
+          name="customer-name" 
+          minlength="3"
+          maxlength="50"
+          required>
+        <input 
+          type="number" 
+          placeholder="Enter card number"
+          id="card_number"
+          name="card-number" 
+          pattern="[0-9\s]{13,19}"
+          maxlength="19"
+          required>
+        <input 
+          type="number" 
+          id="cvv"
+          name="cvv"
+          placeholder="Enter CVV" 
+          pattern="\d{3,4}" 
+          maxlength="4"
+          required>
         <button id="pay-btn" type="submit">Pay</button>
       </form>
     </div>

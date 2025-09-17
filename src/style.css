@@ -135,9 +135,8 @@ span {
     font-weight: 400;
     color: #BBBBBB;
     margin-left: 10px;
+    cursor: pointer;
 }
-
-
 
 .total {
     width: 508px;

@@ -1,10 +1,12 @@
 import { menuArray as menu } from './data/data'
 
+// Declarations: cache frequently used DOM elements
 const foodMenu = document.getElementById('food-menu')
 const checkoutItems = document.getElementById('checked-out')
 const totalPrice = document.getElementById('total')
 
-
+// Global click delegation for add-to-cart, open modal, and remove-from-cart
+// - Uses data attributes (data-add, data-remove) to identify actions
 document.addEventListener('click', function(e){
     if(e.target.dataset.add){
         handleCheckout(e.target.dataset.add);
@@ -22,6 +24,10 @@ document.addEventListener('click', function(e){
 
 })
 
+// Payment form submit handler
+// - Prevents default submission
+// - Validates name, card number (regex + Luhn), and CVV
+// - On success, proceeds to "paid" flow
 document.getElementById('payment-form').addEventListener('submit', function(e){
     e.preventDefault()
 
@@ -52,6 +58,7 @@ document.getElementById('payment-form').addEventListener('submit', function(e){
 
 })
 
+// Luhn algorithm: determines if a card number is potentially valid
 function luhnCheck(number) {
     let sum = 0, shouldDouble = false
 
@@ -68,6 +75,7 @@ function luhnCheck(number) {
 }
 
 const menuItems = menu.map(function(menuItem){
+    // Render a single menu item card with an add button
     return `
      <div class="item-container">
         <div class="emoji">${menuItem.emoji}</div>
@@ -83,6 +91,7 @@ const menuItems = menu.map(function(menuItem){
 
 let cartItems = []
 
+// Add item to cart by id, then re-render cart UI
 function handleCheckout (foodId) {
     
     const checkedOut = menu.filter(function(menuItem){
@@ -97,6 +106,7 @@ function handleCheckout (foodId) {
 	renderCart()
 }
 
+// Remove a single occurrence of an item from cart by id, then re-render
 function handleRemoveItem(removeId) {
 	const indexToRemove = cartItems.findIndex(function(item){
 		return item.id === Number(removeId)
@@ -107,6 +117,7 @@ function handleRemoveItem(removeId) {
 	renderCart()
 }
 
+// Open the payment modal and activate overlay
 function handleCompleteButtonClick() {
     const modal = document.getElementById('card-details-modal')
     const overlay = document.getElementById('modal-overlay')
@@ -115,6 +126,7 @@ function handleCompleteButtonClick() {
     overlay.classList.toggle('is-open')
 }
 
+// Close modal and show a thank-you message with the customer's name
 function handlePayButtonClick(name) {
     document.getElementById('card-details-modal').style.display = 'none'
     document.getElementById('modal-overlay').classList.toggle('is-open')
@@ -125,12 +137,16 @@ function handlePayButtonClick(name) {
     `
 }
 
+// Render all menu items into the menu container
 function renderFoodItem() {
      foodMenu.innerHTML = menuItems
 }
 
 renderFoodItem()
 
+// Render the cart UI (items list and total)
+// - Hides checkout section when cart is empty
+// - Uses data-remove on each line item to enable removal via delegation
 function renderCart(){
 	if(cartItems.length === 0){
 		document.getElementById('checkout').style.display = 'none'

@@ -137,6 +137,8 @@ span {
     margin-left: 10px;
 }
 
+
+
 .total {
     width: 508px;
     margin-left: 46px;
@@ -202,6 +204,12 @@ input {
     font-weight: 400;
     padding-left: 20px;
     margin-bottom: 30px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .thank-you-msg {

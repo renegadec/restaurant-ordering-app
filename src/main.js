@@ -15,6 +15,11 @@ document.addEventListener('click', function(e){
     if(e.target.id === 'complete-order-btn'){
         handleCompleteButtonClick()
     }
+
+    if(e.target.dataset.remove){
+        handleRemoveItem(e.target.dataset.remove)
+    }
+
 })
 
 document.getElementById('payment-form').addEventListener('submit', function(e){
@@ -76,7 +81,7 @@ const menuItems = menu.map(function(menuItem){
     `
 })
 
-const cartItems = []
+let cartItems = []
 
 function handleCheckout (foodId) {
     
@@ -89,21 +94,17 @@ function handleCheckout (foodId) {
 
     cartItems.push(checkedOut)
 
-    const cartTotalPrice = cartItems.reduce(function(sum, item){
-        return sum + item.price
-    }, 0)
+	renderCart()
+}
 
-    checkoutItems.innerHTML += `
-        <div>
-            <p>${checkedOut.name}<span class="remove-btn">remove</span><p> 
-            <p>$${checkedOut.price}</p>
-        </div>
-    `
-
-    totalPrice.innerHTML = `
-            <p>Total Price:</p>
-            <p>$${cartTotalPrice}</p>
-    `
+function handleRemoveItem(removeId) {
+	const indexToRemove = cartItems.findIndex(function(item){
+		return item.id === Number(removeId)
+	})
+	if(indexToRemove !== -1){
+		cartItems.splice(indexToRemove, 1)
+	}
+	renderCart()
 }
 
 function handleCompleteButtonClick() {
@@ -129,4 +130,36 @@ function renderFoodItem() {
 }
 
 renderFoodItem()
+
+function renderCart(){
+	if(cartItems.length === 0){
+		document.getElementById('checkout').style.display = 'none'
+		checkoutItems.innerHTML = ''
+		totalPrice.innerHTML = ''
+		return
+	}
+
+	document.getElementById('checkout').style.display = 'block'
+	document.querySelector('.container').style.height = 'auto'
+
+	const itemsHtml = cartItems.map(function(item){
+		return `
+		<div>
+			<p>${item.name}<span class="remove-btn" data-remove="${item.id}">remove</span><p> 
+			<p>$${item.price}</p>
+		</div>
+		`
+	}).join('')
+
+	checkoutItems.innerHTML = itemsHtml
+
+	const cartTotalPrice = cartItems.reduce(function(sum, item){
+		return sum + item.price
+	}, 0)
+
+	totalPrice.innerHTML = `
+			<p>Total Price:</p>
+			<p>$${cartTotalPrice}</p>
+	`
+}
 

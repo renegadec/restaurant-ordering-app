@@ -179,3 +179,10 @@ function renderCart(){
 	`
 }
 
+// Close the modal when clicking outside it (on the overlay)
+document.getElementById('modal-overlay').addEventListener('click', function(){
+    const modal = document.getElementById('card-details-modal')
+    modal.style.display = 'none'
+    this.classList.remove('is-open')
+})
+
